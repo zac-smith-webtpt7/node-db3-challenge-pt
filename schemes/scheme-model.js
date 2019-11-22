@@ -16,7 +16,22 @@ function find() {
 function findById(id) {
   return db("schemes")
     .where({ id })
-    .first();
+    .first()
+    .then(schemeObj => {
+      // console.log(schemeObj);
+      // schemeObj.steps = ;
+      return db("steps")
+        .where("scheme_id", id)
+        .then(stepsArr => {
+          schemeObj.steps = stepsArr;
+          return schemeObj;
+        });
+
+      // findSteps(schemeObj.id).then(steps => {
+      //   // console.log(steps);
+
+      // });
+    });
 }
 
 function findSteps(id) {
